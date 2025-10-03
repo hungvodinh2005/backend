@@ -94,7 +94,7 @@ module.exports.createPost = async (req, res) => {
   req.body.discountPercentage = parseInt(req.body.discountPercentage);
   req.body.position = parseInt(req.body.position);
   if (req.file) {
-    req.body.thumbnail = `/upload/${req.file.filename}`;
+    //req.body.thumbnail = `/upload/${req.file.filename}`;
   }
 
   const Product = new product(req.body);
@@ -122,7 +122,7 @@ module.exports.edit = async (req, res) => {
   req.body.discountPercentage = parseInt(req.body.discountPercentage);
   req.body.position = parseInt(req.body.position);
   if (req.file) {
-    req.body.thumbnail = `/upload/${req.file.filename}`;
+    //req.body.thumbnail = `/upload/${req.file.filename}`;
   }
   try {
     await product.updateOne({ _id: id }, req.body);
