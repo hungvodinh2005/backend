@@ -1,0 +1,17 @@
+extends ../../layouts/default.pug
+block main 
+    .product-card.container-sm
+        h2 #{products.title}
+        p Giá: 
+            strong #{products.price}
+        p Giảm giá: 
+            strong #{products.discountPercentage}%
+        p Còn lại: 
+            strong 50
+
+        .product-image
+            img(src=products.thumbnail, alt="Sản phẩm abc",style="height:100px;border-radius:20px")
+
+        p Vị trí: 
+            strong 20
+        p Lorem...

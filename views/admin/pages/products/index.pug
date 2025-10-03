@@ -1,0 +1,73 @@
+extends ../../layouts/default.pug 
+include ../../mixins/filterStatus.pug
+include ../../mixins/search.pug
+include ../../mixins/pagination.pug
+include ../../mixins/alerts.pug
+block main
+    +alertSuccess(5000)
+    h1(class="pt-2 text-center") DANH SÁCH SẢN PHẨM
+    .card.mb-3
+        .card-header 
+            span(class="fs-4") Bộ lọc và tìm kiếm
+        .card-body
+            .row 
+                +filterStatus(filterStatus)
+                +search(search)
+            
+    .card.mb-3
+        .card-header Danh sách
+        .row 
+            .col-6 
+                form(action=`${prefixAdmin}/products/changeMulti?_method=PATCH`, method="post",formChangeMulti)
+                    .input-group 
+                        select(name="type" class="ms-2 mt-2 form-select"  ) 
+                            option(value="" disabled selected) ---Chọn Chế Độ---
+                            option(value="active") Hoạt Động
+                            option(value="inactive") Không Hoạt Động
+                            option(value="position") Đổi Vị Trí
+                            option(value="delete") Xóa Item
+                        input(type="text" name="id" class="form-control mt-2 d-none")
+                        button(type="submit" class="btn btn-success mt-2 " ) Change
+            .col-6 
+                a(href=`${prefixAdmin}/products/create`,class="btn btn-outline-success mt-2") + Tạo Mới 
+        table(class="table table-hover table-bordered table-striped rounded-3" tableProducts)
+            thead 
+                tr.align-middle
+                    th 
+                        input(type="checkbox",checkboxAll) 
+                    th STT 
+                    th Hình ảnh 
+                    th Tiêu Đề
+                    th Vị Trí 
+                    th Giá
+                    th Trạng Thái 
+                    th Hành Động 
+            tbody
+                each item,index in products 
+                    tr.align-middle 
+                        td 
+                             input(type="checkbox",value=item._id,checkboxChild)     
+                        td #{index+1}
+                        td 
+                            img(src=item.thumbnail, height="40",width="80", alt="iphone",style="border-radius:5px")  
+                        td #{item.title}
+                        td  
+                            input(type="number", name="position" inputPosition value=item.position style="width:50px;border-radius:5px;text-align:center" required min="1")
+                        td #{item.price}$
+                        td  
+                            if item.status=="active"
+                                button(class="badge rounded-pill text-bg-success border-0" buttonID=item._id buttonStatus=item.status buttonChangestatus="") Hoạt Động
+                            else 
+                                button(class="badge rounded-pill text-bg-danger border-0" buttonID=item._id buttonStatus=item.status buttonChangestatus="") Không Hoạt Động
+                        td 
+                            a(href=`${prefixAdmin}/products/details/${item._id}`,class="btn btn-warning btn-sm") Chi Tiết
+                            a(href=`${prefixAdmin}/products/edit/${item._id}`,class="btn btn-warning btn-sm ms-1") Sửa
+                            button(class="btn btn-danger btn-sm",style="margin-left:2px" buttonDelete=item._id) Xóa  
+            
+    +pagination(currentPage,totalPages)
+    form(action="", method="POST", path=`${prefixAdmin}/products/changeStatus`,buttonFormStatus="")
+    form(action="", method="POST",path=`${prefixAdmin}/products/deletes`,buttonFormDelete) 
+    script(src="/js/script.js")   
+    script(src="/admin/js/index.js") 
+    script(src="/admin/js/products.js") 
+        

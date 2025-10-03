@@ -1,0 +1,44 @@
+extends ../../layouts/default.pug 
+include ../../mixins/alerts.pug
+block main 
+    h1 Cập Nhật Sản Phẩm
+    +alertError(5000)
+    +alertSuccess(5000)
+    form(action=`${prefixAdmin}/products/editItem/${products._id}?_method=PATCH`, method="post",enctype="multipart/form-data") 
+        div(class="mt-2") 
+            label(for="title" class="mb-2 ms-2" style="font-size:20px") Tiêu Đề 
+            input(type="text", name="title",class="form-control",id="title",value=products.title) 
+        div(class="mt-2") 
+            label(for="describe" class="mb-2 ms-2" style="font-size:20px") Mô Tả 
+            textarea(name="description",class="form-control",id="describe",style="height:100px") #{products.description}
+        div(class="mt-2") 
+            label(for="price" class="mb-2 ms-2" style="font-size:20px") Giá 
+            input(type="number", name="price",class="form-control",id="price",required,min="1",value=products.price) 
+        div(class="mt-2") 
+            label(for="percent" class="mb-2 ms-2" style="font-size:20px") % Giá 
+            input(type="number", name="discountPercentage",class="form-control",id="percent",required,min="1",value=products.discountPercentage) 
+        div(class="mt-2") 
+            label(for="thumbnail" class="mb-2 ms-2" style="font-size:20px") Ảnh 
+            .row.align-items-center 
+                .col-4 
+                    input(type="file", name="thumbnail",class="form-control",id="thumbnail",thumbnail) 
+                .col-3     
+                    .preview-wrapper
+                        img(src=products.thumbnail , alt="image", uploadPreviewImage,class=products.thumbnail ? "" : "d-none")
+                        span(class=`removeCloseUpload ${products.thumbnail ? "" : "d-none"}`) X
+
+        div(class="mt-2") 
+            label(for="percent" class="mb-2 ms-2" style="font-size:20px" ) Vị Trí 
+            input(type="number", name="position",class="form-control",id="position",required,min="1",value=products.position) 
+        div(class="mt-4") 
+        .input-group 
+            .form-check 
+                input(type="radio", name="status",id="active",class="form-check-input",value="active",checked=products.status=="active"?"true":"false") 
+                label(for="active" , class="form-check-label") Hoạt Động 
+            .form-check.ms-4 
+                input(type="radio", name="status",id="inactive",class="form-check-input " ,value="inactive",checked=products.status=="inactive"?"true":"false") 
+                label(for="inactive", class="form-check-label" value="inactive") Không Hoạt Động 
+        button(type="submit" class="btn btn-primary mt-4") Cập Nhật
+    script(src="/admin/js/create.js") 
+    
+        

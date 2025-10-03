@@ -1,0 +1,41 @@
+extends ../../layouts/default.pug 
+
+block main
+  .product-detail
+    .card
+      .card-header.text-center
+        h1 #{products.title}
+
+      .card-body
+        .row
+          .col-6.text-center
+            img.product-thumbnail(src=products.thumbnail, alt=products.title,style="height:400px;border-radius:50px")
+          .col-6
+            p.description 
+              strong Description: 
+              | #{products.description}
+
+            p.price 
+              strong Price: 
+              | $#{products.price}
+
+            p.discount
+              strong Discount: 
+              | #{products.discountPercentage}%
+
+            p.status 
+              strong Status: 
+              | #{products.status}
+
+            p.position 
+              strong Position: 
+              | #{products.position}
+
+            p.deleted 
+              strong Deleted: 
+              | #{products.deleted}
+
+    // JS
+    script(src="/js/script.js")   
+    script(src="/admin/js/index.js") 
+    script(src="/admin/js/products.js") 

@@ -1,0 +1,10 @@
+mixin alertSuccess(time)
+    if messages.success.length>0
+        div(class="alert alert-primary notice-box" ,time=time, notice)
+            span #{messages.success}
+            span.close X
+mixin alertError(time)
+    if messages.error.length>0
+        div(class="alert alert-danger notice-box" ,time=time, notice)
+            span #{messages.error} 
+            span.close X
