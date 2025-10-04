@@ -3,6 +3,7 @@ include ../../mixins/filterStatus.pug
 include ../../mixins/search.pug
 include ../../mixins/pagination.pug
 include ../../mixins/alerts.pug
+include ../../mixins/sort.pug
 block main
     +alertSuccess(5000)
     h1(class="pt-2 text-center") DANH SÁCH SẢN PHẨM
@@ -13,7 +14,9 @@ block main
             .row 
                 +filterStatus(filterStatus)
                 +search(search)
-            
+    .card.mb-3.pt-2.pb-2 
+        .row 
+            +sort()
     .card.mb-3
         .card-header Danh sách
         .row 

@@ -15,12 +15,19 @@ module.exports.productController = async (req, res) => {
   if (search.keyword) {
     find.title = { $regex: search.regex };
   }
+  console.log(req.query);
+  let sort = {};
+  if (req.query.sortKey && req.query.sortValue) {
+    sort[req.query.sortKey] = req.query.sortValue;
+  } else {
+    sort.position = "asc";
+  }
   //await product.updateMany({ deleted: true }, { $set: { deleted: false } });
   let dividePage = await dividePagevari.dividePage(product, req.query);
   const products = await product
 
     .find(find)
-    .sort({ position: -1 })
+    .sort(sort)
     .limit(dividePage.limitElement)
     .skip(dividePage.indexStartElement);
   res.render("admin/pages/products/index", {

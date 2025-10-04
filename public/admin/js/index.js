@@ -57,3 +57,36 @@ if (indexPage) {
     });
   });
 }
+//sort
+const select = document.querySelector("[selectSort]");
+const clear = document.querySelector("button[clearSelectSort]");
+
+if (select) {
+  let url = new URL(window.location.href);
+  select.addEventListener("change", (e) => {
+    const [sortKey, sortValue] = e.target.value.split("-");
+
+    url.searchParams.set("sortKey", sortKey);
+    url.searchParams.set("sortValue", sortValue);
+
+    window.location.href = url.href;
+  });
+}
+if (clear) {
+  let url = new URL(window.location.href);
+  clear.addEventListener("click", () => {
+    url.searchParams.delete("sortKey");
+    url.searchParams.delete("sortValue");
+
+    window.location.href = url.href;
+  });
+}
+let url = new URL(window.location.href);
+if (url.searchParams.get("sortKey") && url.searchParams.get("sortValue")) {
+  const key = url.searchParams.get("sortKey");
+  const value = url.searchParams.get("sortValue");
+  const keyValue = key + "-" + value;
+  const defaultSelect = select.querySelector(`option[value="${keyValue}"]`);
+  defaultSelect.setAttribute("selected", true);
+}
+//end sort
